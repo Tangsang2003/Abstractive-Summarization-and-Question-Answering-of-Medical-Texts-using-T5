@@ -1,5 +1,6 @@
 # Abstractive-Summarization-and-Question-Answering-of-Medical-Texts-using-T5
-Fine-tuning T5 for abstractive summarization and question answering of medical texts, simplifying complex medical information into patient-friendly language.
+## Overview
+This project utilizes the T5 (Text-To-Text Transfer Transformer) model from Hugging Face Transformers to perform abstractive summarization and question answering on medical texts. The T5 model is fine-tuned on medical domain-specific data to generate concise summaries.
 
 ## Directory Structure
 
