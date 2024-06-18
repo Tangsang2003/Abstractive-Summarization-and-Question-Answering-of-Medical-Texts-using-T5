@@ -9,9 +9,7 @@ def clean_text(text):
     return cleaned_text
 
 
-# This function counts words from the text. This function is used in-case of very long contexts.
-# This was initially used but after finding out that tokenizer could count the number of tokens, it isn't used
-# anymore.
+# This function counts words from the text.
 def count_words(text):
     """
     Counts the number of words in a given text after removing special characters.
@@ -48,7 +46,8 @@ def load_summarization_model():
 
 # Function to summarize the given medical text, Further implementation required to handle longer than max_length
 # articles
-def summarize_text(text, summarization_pipeline):
+# Not using because of unknown bug
+def summarize_text_long(text, summarization_pipeline):
     tokenizer = summarization_pipeline.tokenizer
     summaries = []
     chunk_size = 512
@@ -72,9 +71,25 @@ def summarize_text(text, summarization_pipeline):
     return combined_summary
 
 
+# Fix summarize function
+def summarize_text(text, summarization_pipeline):
 
+    # Generate summary for the current chunk
+    length = count_words(text)
+    summary = summarization_pipeline(text, max_length=length, min_length=round(0.35 * length), do_sample=False)[0]['summary_text']
+    # Split the summary into sentences
+    sentences = summary.split('. ')
+    # The code below is to ensure proper capitalization of first words of sentences in the summary to be capital.
+    # This was done because the summary contained all words in small because of pre-processing during input.
+    # Capitalize the first letter of each sentence
+    capitalized_sentences = '. '.join(sentence.capitalize() for sentence in sentences)
+
+    # Capitalize the very first letter of the entire summary
+    capitalized_summary = capitalized_sentences[0].capitalize() + capitalized_sentences[1:]
+    return capitalized_summary
 
 # Test
+# Ignore below. Use for testing only
 # context = '''
 #
 #
