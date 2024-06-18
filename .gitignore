@@ -1,4 +1,7 @@
 datasets
+app/models/question_answering/checkpoint-1500
+app/models/summarization/summarization_final_trained_model
 datasets/CHV-amia14-data.tsv
 datasets/medical_summaries_clean_final.csv
 ./sumpubmed_simplified.csv
+./structure.md
