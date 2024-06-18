@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Summarization and QA</title>
+</head>
+<body>
+    <h1>Medical Summarization and Question Answering</h1>
+    <form action="/summarize" method="post">
+        <textarea name="input_text" placeholder="Enter text to summarize"></textarea>
+        <button type="submit">Summarize</button>
+    </form>
+    <form action="/answer" method="post">
+        <textarea name="input_text" placeholder="Enter context"></textarea>
+        <input type="text" name="question" placeholder="Enter your question">
+        <button type="submit">Get Answer</button>
+    </form>
+</body>
+</html>
