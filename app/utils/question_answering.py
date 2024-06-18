@@ -1,10 +1,17 @@
 from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
+from tqdm import tqdm
 
 
 # This function loads the question-answering model during app startup
 def load_qa_model():
-    tokenizer = T5Tokenizer.from_pretrained('./app/models/question_answering/checkpoint-1500/tokenizer')
-    model = T5ForConditionalGeneration.from_pretrained('./app/models/question_answering/checkpoint-1500')
+    print("Loading QA Model...")
+    with tqdm(total=2, desc="QA Model", bar_format="{l_bar}{bar} [ time left: {remaining} ]") as pbar:
+        tokenizer = T5Tokenizer.from_pretrained('./app/models/question_answering/checkpoint-1500/tokenizer')
+        pbar.update(1)
+        model = T5ForConditionalGeneration.from_pretrained('./app/models/question_answering/checkpoint-1500')
+        pbar.update(1)
+    print("QA Model Loaded Successfully")
+
     return pipeline("text2text-generation", model=model, tokenizer=tokenizer)
 
 

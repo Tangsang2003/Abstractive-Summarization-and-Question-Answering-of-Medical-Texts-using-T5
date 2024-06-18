@@ -1,28 +1,77 @@
 from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
+from tqdm import tqdm
+import re
+
+
+# This function cleans the text by getting rid of special characters.
+def clean_text(text):
+    cleaned_text = re.sub(r'[^A-Za-z0-9\s]', '', text)
+    return cleaned_text
+
+
+# This function counts words from the text. This function is used in-case of very long contexts.
+# This was initially used but after finding out that tokenizer could count the number of tokens, it isn't used
+# anymore.
+def count_words(text):
+    """
+    Counts the number of words in a given text after removing special characters.
+
+    Parameters:
+    text (str): The input text.
+
+    Returns:
+    int: The number of words in the text.
+    """
+    # Using regex to remove special characters and keep only alphanumeric characters and spaces
+    cleaned_text = clean_text(text)
+
+    # Split the cleaned text by whitespace to get the words
+    words = cleaned_text.split()
+
+    # Return the length of the list of words
+    return len(words)
 
 
 # This function is used to load the model during app startup
 def load_summarization_model():
-    tokenizer = T5Tokenizer.from_pretrained('./app/models/summarization/summarization_final_trained_model/tokenizer')
-    model = T5ForConditionalGeneration.from_pretrained('./app/models/summarization/summarization_final_trained_model')
+    print("Loading Summarization Model...")
+    with tqdm(total=2, desc="Summarization Model", bar_format="{l_bar}{bar} [ time left: {remaining} ]") as pbar:
+        tokenizer = T5Tokenizer.from_pretrained(
+            './app/models/summarization/summarization_final_trained_model/tokenizer')
+        pbar.update(1)
+        model = T5ForConditionalGeneration.from_pretrained(
+            './app/models/summarization/summarization_final_trained_model')
+        pbar.update(1)
+    print("Summarization Model Loaded Successfully")
     return pipeline("summarization", model=model, tokenizer=tokenizer)
 
 
 # Function to summarize the given medical text, Further implementation required to handle longer than max_length
 # articles
 def summarize_text(text, summarization_pipeline):
-    summary = summarization_pipeline(text, do_sample=False)[0]['summary_text']
-    # Split text into chunks
-    # text_chunks = [text[i:i + max_chunk_length] for i in range(0, len(text), max_chunk_length)]
-    #
-    # # Summarize each chunk
-    # summaries = [summarization_pipeline(chunk, max_length=150, min_length=30, do_sample=False)[0]['summary_text'] for
-    #              chunk in text_chunks]
-    #
-    # # Combine summaries
-    # combined_summary = ' '.join(summaries)
-    # return combined_summary
-    return summary
+    tokenizer = summarization_pipeline.tokenizer
+    summaries = []
+    chunk_size = 512
+    overlap_size = 50
+    tokens = tokenizer.encode(text, return_tensors='pt', truncation=False)
+    input_length = tokens.size(1)
+
+    for start in range(0, input_length, chunk_size - overlap_size):
+        end = min(start + chunk_size, input_length)
+        chunk_text = tokenizer.decode(tokens[0, start:end], skip_special_tokens=True)
+
+        # Generate summary for the current chunk
+        summary = summarization_pipeline(chunk_text, max_length=150, min_length=30, do_sample=False)[0]['summary_text']
+        summaries.append(summary)
+
+        if end == input_length:
+            break
+
+        # Combine all summaries
+    combined_summary = " ".join(summaries)
+    return combined_summary
+
+
 
 
 # Test
