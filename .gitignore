@@ -1,4 +1,5 @@
 *.pyc
+.idea/
 datasets
 app/models/question_answering/checkpoint-1500
 app/models/summarization/summarization_final_trained_model
