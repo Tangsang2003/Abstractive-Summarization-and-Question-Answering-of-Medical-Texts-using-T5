@@ -1,5 +1,6 @@
 from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
 from tqdm import tqdm
+import re
 
 
 # This function loads the question-answering model during app startup
@@ -15,9 +16,21 @@ def load_qa_model():
     return pipeline("text2text-generation", model=model, tokenizer=tokenizer)
 
 
+# Function to Normalize input texts
+def normalize_text(text):
+    # Remove newlines, extra whitespace, and replace bullet points with spaces
+    text = re.sub(r'\n+', ' ', text)  # Replace multiple newlines with a single space
+    text = re.sub(r'\r+', ' ', text)  # Replace carriage returns with a space
+    text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with a single space
+    text = re.sub(r'\*+', ' ', text)  # Replace asterisks with a space (if used as bullets)
+    text = re.sub(r'\-+', ' ', text)  # Replace dashes with a space (if used as bullets)
+    return text.strip()  # Strip leading and trailing spaces
+
+
 # Function to generate answer based on Context and question
 def answer_question(context, question, qa_pipeline):
     # Prepare the input for the model
+    context = normalize_text(context)
     input_text = f"question: {question} context: {context}"
     # Perform text generation (which in this case will answer the question)
     generated_text = qa_pipeline(input_text, max_length=150)

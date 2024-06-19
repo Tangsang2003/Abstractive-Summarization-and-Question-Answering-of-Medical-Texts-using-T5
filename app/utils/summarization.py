@@ -71,12 +71,25 @@ def summarize_text_long(text, summarization_pipeline):
     return combined_summary
 
 
+# Function to Normalize input texts
+def normalize_text(text):
+    # Remove newlines, extra whitespace, and replace bullet points with spaces
+    text = re.sub(r'\n+', ' ', text)  # Replace multiple newlines with a single space
+    text = re.sub(r'\r+', ' ', text)  # Replace carriage returns with a space
+    text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with a single space
+    text = re.sub(r'\*+', ' ', text)  # Replace asterisks with a space (if used as bullets)
+    text = re.sub(r'\-+', ' ', text)  # Replace dashes with a space (if used as bullets)
+    text = re.sub(r'\n', ' ', text)
+    return text.strip()  # Strip leading and trailing spaces
+
+
 # Fix summarize function
 def summarize_text(text, summarization_pipeline):
 
     # Generate summary for the current chunk
     length = count_words(text)
-    summary = summarization_pipeline(text, max_length=length, min_length=round(0.35 * length), do_sample=False)[0]['summary_text']
+    input_text = normalize_text(text)
+    summary = summarization_pipeline(input_text, max_length=round(0.7 * length), min_length=round(0.35 * length), do_sample=False)[0]['summary_text']
     # Split the summary into sentences
     sentences = summary.split('. ')
     # The code below is to ensure proper capitalization of first words of sentences in the summary to be capital.
