@@ -7,6 +7,8 @@
 <body>
     <h1>{{ task }} Result</h1>
     <p>{{ result }}</p>
-    <a href="/">Back to Home</a>
-</body>
-</html>
+    <div class="container">
+        <!-- Render the HTML content -->
+        {{ html_content | safe }}
+    </div>
+

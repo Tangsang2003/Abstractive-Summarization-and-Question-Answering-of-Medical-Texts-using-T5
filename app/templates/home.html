@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Medical Summarization and QA</title>
-</head>
-<body>
-    <h1>Medical Summarization and Question Answering</h1>
-    <form action="/summarize" method="post">
-        <textarea name="input_text" placeholder="Enter text to summarize"></textarea>
-        <button type="submit">Summarize</button>
-    </form>
-    <form action="/answer" method="post">
-        <textarea name="input_text" placeholder="Enter context"></textarea>
-        <input type="text" name="question" placeholder="Enter your question">
-        <button type="submit">Get Answer</button>
-    </form>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block title %}Home - MedEaseIne{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container">
+        <p class="lead">
+            <strong>MedEaseIne</strong> simplifies medical information by summarizing complex medical texts and answering
+            questions based on provided documents or texts. It also generates patient-friendly summaries
+            for easier understanding.
+        </p>
+        <a id="get-started" href="{{ url_for('main.summarize') }}" class="btn btn-outline-secondary">Get Started</a>
+    </div>
+</div>
+{% endblock %}

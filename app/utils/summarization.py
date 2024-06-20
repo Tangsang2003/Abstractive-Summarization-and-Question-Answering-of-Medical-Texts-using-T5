@@ -1,6 +1,11 @@
 from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
 from tqdm import tqdm
 import re
+import google.generativeai as genai
+import os
+import fitz
+
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 
 # This function cleans the text by getting rid of special characters.
@@ -89,7 +94,8 @@ def summarize_text(text, summarization_pipeline):
     # Generate summary for the current chunk
     length = count_words(text)
     input_text = normalize_text(text)
-    summary = summarization_pipeline(input_text, max_length=round(0.7 * length), min_length=round(0.35 * length), do_sample=False)[0]['summary_text']
+    summary = summarization_pipeline(input_text, max_length=round(0.7 * length), min_length=round(0.35 * length),
+                                     do_sample=False)[0]['summary_text']
     # Split the summary into sentences
     sentences = summary.split('. ')
     # The code below is to ensure proper capitalization of first words of sentences in the summary to be capital.
@@ -100,6 +106,37 @@ def summarize_text(text, summarization_pipeline):
     # Capitalize the very first letter of the entire summary
     capitalized_summary = capitalized_sentences[0].capitalize() + capitalized_sentences[1:]
     return capitalized_summary
+
+
+# This function ensures that uploaded file is in pdf
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
+
+
+# This function is used to extract text from the uploaded pdf
+def extract_text_from_pdf(file):
+    text = ''
+    pdf_document = fitz.open(stream=file.read(), filetype="pdf")
+    for page_num in range(pdf_document.page_count):
+        page = pdf_document.load_page(page_num)
+        text += page.get_text()
+    return text
+
+
+# This function uses Google Gemini to generate summaries
+def google_summary(text, level):
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    output_level = level
+    if level == 'professional':
+        input_prompt = 'Summarize the whole text suitable for Healthcare Professional ' \
+                       '(It is not necessary to simplify terms)'
+    elif level == 'intermediate':
+        input_prompt = 'Summarize the whole text suitable for intermediate (Informed Individual): '
+    else:
+        input_prompt = 'Summarize the whole text suitable for Layman person: '
+    response = model.generate_content(input_prompt + text)
+    return response
 
 # Test
 # Ignore below. Use for testing only

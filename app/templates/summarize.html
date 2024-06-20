@@ -1,0 +1,36 @@
+<!-- summarize.html -->
+{% extends 'layout.html' %}
+{% block title %}Summarization{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2 class="mt-4 mb-4">Summarization</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.model_choice.label(class="form-label") }}
+                {{ form.model_choice(class="form-select") }}
+
+            </div>
+            <div class="mb-3">
+                {{ form.gemini_option.label(class="form-label") }}
+                {{ form.gemini_option( class="form-select") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.file_upload.label(class="form-label d-block") }}
+                {{ form.file_upload(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.input_text.label(class="form-label") }}
+                {{ form.input_text(class="form-control", rows=5) }}
+            </div>
+
+            <button type="submit" class="btn btn-secondary">Summarize</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

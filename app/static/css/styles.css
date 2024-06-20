@@ -1,0 +1,44 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #f0f8ff; /* Aesthetic light blue background color */
+    color: #333; /* Dark grey text color for contrast */
+    font-family: 'Arial', sans-serif; /* Clean font for readability */
+    text-align: center;
+}
+
+
+/* Center the image */
+#title-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+    margin-top: 100px;
+}
+
+ .footer {
+
+            margin-top: 98px;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa; /* Light grey background */
+        }
+
+.bg-body-tertiary{
+    width: 50rem;
+    margin:auto;
+}
+
+#flask-msg{
+margin-top: 10px
+}
+.lead{
+margin: auto;
+width: 50rem;
+justify-content: center;
+}
+
+#get-started{
+    margin-top: 10px;
+}
