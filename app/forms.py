@@ -1,7 +1,7 @@
 # forms.py
 from flask_wtf import FlaskForm
-from wtforms import SelectField, FileField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import SelectField, FileField, TextAreaField, SubmitField, StringField
+from wtforms.validators import DataRequired, Email, Length
 
 
 # Form for summary generation
@@ -34,3 +34,12 @@ class QaForm(FlaskForm):
     input_text = TextAreaField('Input Text')
     question_input = TextAreaField('Question')
     submit = SubmitField('Answer')
+
+
+# This form is for Contact Us page
+class ContactForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=100)])
+    email = StringField('Email', validators=[DataRequired()])
+    subject = StringField('Subject', validators=[DataRequired(), Length(max=200)])
+    message = TextAreaField('Message', validators=[DataRequired(), Length(min=10)])
+    submit = SubmitField('Send Message')

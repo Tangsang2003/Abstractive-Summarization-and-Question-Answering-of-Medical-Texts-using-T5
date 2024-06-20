@@ -73,3 +73,56 @@ justify-content: center;
     text-align: left;
     margin-bottom: 5px;
 }
+
+.container-about {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.dotted-hr {
+    border: none; /* Remove default border */
+    border-top: 12px dotted black; /* Create a dotted border */
+    width: 50px; /* Adjust width to your preference */
+    margin: auto; /* Center the element */
+}
+
+.team-member {
+    margin-bottom: 40px;
+
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-top: 5px;
+}
+
+.about-p {
+    text-align: justify;
+    margin-bottom: 4px;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.contact-form-box {
+    background-color: #f8f9fa;; /
+    border: 2px solid #00796b; /* Teal border color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px; /* Padding inside the box */
+}
+
+.contact-form-box h2 {
+    color: #000000;
+}
+
+.contact-form-box .form-label {
+    color: #00000; /* Dark teal color for the labels */
+}
+

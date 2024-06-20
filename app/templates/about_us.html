@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<div class="container-about">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mt-0 mb-4">About Us</h1>
+            <p class="about-p">
+                We are a team of dedicated engineering students from IOE, Pulchowk Campus, currently in our 4th year
+                of study. Our passion lies in the fields of Artificial Intelligence (AI), Machine Learning (ML), Web Development,
+                and Application Development.
+                We aim to leverage our skills and knowledge to create innovative solutions that make complex tasks simpler
+                and more accessible.
+
+            </p>
+
+<!--            <h3 class="mt-4">Our Team</h3>-->
+            <hr>
+
+            <!-- Member 1 -->
+            <div class="team-member mt-4 mb-4 clearfix">
+                <img src="{{ url_for('static', filename='images/tangsang.png') }}" class="img-fluid float-start me-3 mb-3" alt="Member 1">
+                <h4 style="text-align:left;">Tangsang Chongbang</h4>
+                <p class="about-p">
+
+                    I'm a passionate developer with a keen interest in Machine Learning and AI, Web Development,
+                    Algorithms, and well basically computers in general. I aspire to work and contribute to the field of Artificial Intelligence someday.
+
+                </p>
+            </div>
+            <hr class="dotted-hr">
+
+            <!-- Member 2 -->
+            <div class="team-member mt-4 mb-4 clearfix">
+                <img src="{{ url_for('static', filename='images/pranesh.png') }}" class="img-fluid float-end ms-3 mb-3" alt="Member 2">
+                <h4 style="text-align:right">Pranesh Pyara Shrestha</h4>
+                <p class="about-p">
+                    I have a passion for software development and DevOps. I specialize in integrating development and
+                    operations to optimize the software lifecycle, utilizing AWS tools like CodePipeline, CodeBuild,
+                    CodeDeploy, and CloudFormation to implement robust CI/CD pipelines.
+                    I'm dedicated to delivering innovative, high-quality solutions.
+                </p>
+            </div>
+            <hr class="dotted-hr">
+
+            <!-- Member 3 -->
+            <div class="team-member mt-4 clearfix">
+                <img src="{{ url_for('static', filename='images/amrit.png') }}" class="img-fluid float-start me-3 mb-3" alt="Member 3">
+                <h4 style="text-align:left">Amrit Sarki</h4>
+                <p class="about-p">
+                    I'm a passionate web developer with a keen interest in AI, Web Development, Algorithms, and
+                    ethickal hacking.
+                    Besides coding, I have a variety of hobbies that keep me busy: reading, gaming, watching films.
+                    I sometimes enjoy jotting down thoughts and ideas.
+
+                </p>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,12 +1,12 @@
 from flask import render_template, request, Blueprint, current_app, flash, redirect, url_for
 from app.utils.summarization import summarize_text, google_summary, extract_text_from_pdf, allowed_file
 from app.utils.question_answering import answer_question, google_qna
-from flask_wtf import FlaskForm
-from wtforms import SelectField, FileField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired
+# from flask_wtf import FlaskForm
+# from wtforms import SelectField, FileField, TextAreaField, SubmitField
+# from wtforms.validators import DataRequired
 import markdown2
 
-from .forms import SummarizeForm, QaForm
+from .forms import SummarizeForm, QaForm, ContactForm
 
 
 bp = Blueprint('main', __name__)
@@ -151,3 +151,27 @@ def qna():
     # return render_template('result.html', result=answer, task="Question Answering')
     return render_template('qna.html', form=form, answer=answer, active_page="question-answer")
 
+
+# Route for About Us Page
+@bp.route('/about')
+def about():
+    return render_template('about_us.html', active_page='about')
+
+
+# Route for Contact Us Page
+@bp.route('/contact', methods=['GET', 'POST'])
+def contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        # email = form.email.data
+        # subject = form.subject.data
+        # message = form.message.data
+
+        # Process the form data (e.g., send email, save to database, etc.)
+        # For now, we'll just flash a message
+        flash(f'Thank you, {name}. Your message has been received', 'success')
+
+        return redirect(url_for('main.contact'))
+
+    return render_template('contact_us.html', form=form, active_page="contact")

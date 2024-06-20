@@ -9,3 +9,4 @@ wtforms~=3.1.2
 PyMuPDF
 google-generativeai
 markdown2~=2.4.13
+email_validator

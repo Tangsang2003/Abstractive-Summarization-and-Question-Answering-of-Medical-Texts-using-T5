@@ -10,12 +10,12 @@
             {{ form.hidden_tag() }}
 
             <div class="mb-3">
-                {{ form.model_choice.label(class="form-label") }}
+                {{ form.model_choice.label(class="form-label center-label") }}
                 {{ form.model_choice(class="form-select") }}
 
             </div>
             <div class="mb-3">
-                {{ form.gemini_option.label(class="form-label") }}
+                {{ form.gemini_option.label(class="form-label center-label") }}
                 {{ form.gemini_option( class="form-select") }}
             </div>
 
@@ -29,7 +29,7 @@
                 {{ form.input_text(class="form-control", rows=5) }}
             </div>
 
-            <button type="submit" class="btn btn-secondary">Summarize</button>
+            <button type="submit" class="btn btn-outline-secondary">Summarize</button>
         </form>
 
     </div>
