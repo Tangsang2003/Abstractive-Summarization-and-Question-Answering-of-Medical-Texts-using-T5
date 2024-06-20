@@ -109,6 +109,7 @@ def qna():
                 question = form.question_input.data
             else:
                 flash('Please, provide the question!', 'danger')
+                return redirect(url_for('main.qna'))
             file = form.file_upload.data
             if allowed_file(file.filename):
                 file_contents = extract_text_from_pdf(file)
@@ -121,6 +122,11 @@ def qna():
                     return render_template('qna.html', question=question, form=form, answer=html_content, active_page='question-answer')
                 else:
                     qa_model = current_app.qa_model
+                    if form.question_input.data:
+                        question = form.question_input.data
+                    else:
+                        flash('Please, provide the question!', 'danger')
+                        return redirect(url_for('main.qna'))
                     answer = answer_question(form.input_text.data, question, qa_model)
                     return render_template('qna.html', question=question, form=form, answer=answer, active_page='question-answer')
             else:
@@ -141,12 +147,18 @@ def qna():
                 # Render the results template with the HTML content
                 return render_template('qna.html', question=question, form=form, answer=html_content, active_page='question-answer')
             else:
+                if form.question_input.data:
+                    question = form.question_input.data
+                else:
+                    flash('Please, provide the question!', 'danger')
+                    return redirect(url_for('main.qna'))
                 qa_model = current_app.qa_model
                 answer = answer_question(form.input_text.data, question, qa_model)
 
-                return render_template('result.html', answer=answer, task="Question Answering")
+                return render_template('qna.html', question=question, form=form, active_page='question-answer', answer=answer, task="Question Answering")
         else:
-            answer = "No input provided"
+            flash('No Input Provided', 'danger')
+            return redirect(url_for('main.qna'))
 
     # return render_template('result.html', result=answer, task="Question Answering')
     return render_template('qna.html', form=form, answer=answer, active_page="question-answer")

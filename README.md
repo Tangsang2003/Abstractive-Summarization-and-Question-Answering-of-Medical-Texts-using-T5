@@ -2,6 +2,10 @@
 ## Overview 🧐
 **MedEaseIne**  ⭐ is a project aimed at summarizing medical texts and documents into patient-friendly summaries. It also facilitates question-answering based on medical context using state-of-the-art models. We have utilized the T5 (Text-To-Text Transfer Transformer) model from Hugging Face Transformers library to perform abstractive summarization and question answering on medical texts. The T5 model is fine-tuned on medical domain-specific data (the PubMed Subset Bulk and SumPubMed) to generate concise summaries. Likewise, we have also utilized Google Gemini API to extract information from texts or documents and summarize them into patient-friendly language as well as facilitate question-answering.
 
+## Demo Video 📹
+- The demo video can be found [here.](https://drive.google.com/drive/folders/1zFes1W1IBU5s50MBliVtcKaEum_ApEbZ?usp=drive_link)
+- The slides can be found [here.](https://drive.google.com/drive/folders/1bAvogrEJLA1fIjyC_fcBPlkRimPSnN_B?usp=drive_link)
+
 ## Directory Structure 🗂️
 ```
 .
