@@ -52,7 +52,7 @@
 - [This script](./scripts/subset_sumpubmed.py) and [this script](./scripts/sumpubmed_dataset_script.py) were used to create a subset of SumPubMed dataset.
 - [This script](./scripts/finetuning_T5_for_summarization.ipynb) was used to fine-tune our T5-small model for summarization task in CoLab environment.
 - [This script](./scripts/fine_tune_question_answer.ipynb) was used to fine-tune our T5-base model for the task of question-answering. [SQuAD](https://huggingface.co/datasets/rajpurkar/squad) dataset was used for the fine-tuning process.
-- 
+  
 ## Features ⚙️
 - **Medical Documents and Texts Summarization 📝:**
   - T5 for medical articles summarization.
