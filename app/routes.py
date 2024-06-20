@@ -1,12 +1,12 @@
 from flask import render_template, request, Blueprint, current_app, flash, redirect, url_for
 from app.utils.summarization import summarize_text, google_summary, extract_text_from_pdf, allowed_file
-from app.utils.question_answering import answer_question
+from app.utils.question_answering import answer_question, google_qna
 from flask_wtf import FlaskForm
 from wtforms import SelectField, FileField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired
 import markdown2
 
-from .forms import SummarizeForm
+from .forms import SummarizeForm, QaForm
 
 
 bp = Blueprint('main', __name__)
@@ -26,13 +26,13 @@ def home():
 #     return render_template('result.html', result=summary, task="Summarization")
 
 
-@bp.route('/answer', methods=['POST'])
-def answer():
-    input_text = request.form['input_text']
-    qa_model = current_app.qa_model
-    question = request.form['question']
-    answer = answer_question(input_text, question, qa_model)
-    return render_template('result.html', result=answer, task="Question Answering")
+# @bp.route('/answer', methods=['POST'])
+# def answer():
+#     input_text = request.form['input_text']
+#     qa_model = current_app.qa_model
+#     question = request.form['question']
+#     answer = answer_question(input_text, question, qa_model)
+#     return render_template('result.html', result=answer, task="Question Answering")
 
 
 @bp.route('/summarize', methods=['GET', 'POST'])
@@ -92,3 +92,62 @@ def summarize():
         return render_template('result.html', result=summary, task="Summarization")
 
     return render_template('summarize.html', form=form, active_page="summarize")
+
+
+# Route for Question-Answering
+@bp.route('/qna', methods=['GET', 'POST'])
+def qna():
+    form = QaForm()
+    answer = None
+
+    if form.validate_on_submit():
+        model = form.model_choice.data
+
+        # Handle file upload
+        if form.file_upload.data:
+            if form.question_input.data:
+                question = form.question_input.data
+            else:
+                flash('Please, provide the question!', 'danger')
+            file = form.file_upload.data
+            if allowed_file(file.filename):
+                file_contents = extract_text_from_pdf(file)
+                if model == 'google-gemini':
+                    level = form.gemini_option.data
+
+                    answer = google_qna(file_contents, question, level).text
+                    # Convert Markdown to HTML
+                    html_content = markdown2.markdown(answer)
+                    return render_template('qna.html', question=question, form=form, answer=html_content, active_page='question-answer')
+                else:
+                    qa_model = current_app.qa_model
+                    answer = answer_question(form.input_text.data, question, qa_model)
+                    return render_template('qna.html', question=question, form=form, answer=answer, active_page='question-answer')
+            else:
+                flash('Only PDF files are allowed!', 'danger')
+        elif form.input_text.data:
+            question = form.question_input.data
+            if model == 'google-gemini':
+                level = form.gemini_option.data
+                if level == 'professional':
+                    answer = google_qna(form.input_text.data, question, level).text
+                elif level == 'intermediate':
+                    answer = google_qna(form.input_text.data, question, level).text
+                else:
+                    answer = google_qna(form.input_text.data, question, level).text
+                # Convert Markdown to HTML
+                html_content = markdown2.markdown(answer)
+
+                # Render the results template with the HTML content
+                return render_template('qna.html', question=question, form=form, answer=html_content, active_page='question-answer')
+            else:
+                qa_model = current_app.qa_model
+                answer = answer_question(form.input_text.data, question, qa_model)
+
+                return render_template('result.html', answer=answer, task="Question Answering")
+        else:
+            answer = "No input provided"
+
+    # return render_template('result.html', result=answer, task="Question Answering')
+    return render_template('qna.html', form=form, answer=answer, active_page="question-answer")
+

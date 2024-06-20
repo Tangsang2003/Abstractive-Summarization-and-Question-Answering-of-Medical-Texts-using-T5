@@ -34,7 +34,7 @@
                         <a class="nav-link {% if active_page == 'summarize' %}active{% endif %}" href="{{ url_for('main.summarize') }}">Summarize</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if active_page == 'answer' %}active{% endif %}" href="#">Question-Answering</a>
+                        <a class="nav-link {% if active_page == 'question-answer' %}active{% endif %}" href="{{ url_for('main.qna')}}">Question-Answering</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if active_page == 'about' %}active{% endif %}" href="#">About Us</a>

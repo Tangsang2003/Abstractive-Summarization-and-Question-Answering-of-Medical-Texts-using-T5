@@ -2,7 +2,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: #f0f8ff; /* Aesthetic light blue background color */
+    /* background-color: #f0f8ff; /* Aesthetic light blue background color */
     color: #333; /* Dark grey text color for contrast */
     font-family: 'Arial', sans-serif; /* Clean font for readability */
     text-align: center;
@@ -41,4 +41,35 @@ justify-content: center;
 
 #get-started{
     margin-top: 10px;
+}
+
+
+.result-container {
+    max-width: 600px; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px; /* Add padding for spacing */
+    background-color: #f5f5f5; /* Example background color */
+    border: 1px solid #ccc; /* Example border */
+    border-radius: 5px; /* Rounded corners */
+    text-align: left;
+}
+
+#result-return {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+#summary-result-t5{
+    text-align: justify;
+}
+
+.answer-container {
+    max-width: 600px; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px; /* Add padding for spacing */
+    background-color: #f5f5f5; /* Example background color */
+    border: 1px solid #ccc; /* Example border */
+    border-radius: 5px; /* Rounded corners */
+    text-align: left;
+    margin-bottom: 5px;
 }

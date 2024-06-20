@@ -1,6 +1,11 @@
 from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
 from tqdm import tqdm
 import re
+import google.generativeai as genai
+import os
+
+
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 
 # This function loads the question-answering model during app startup
@@ -38,6 +43,20 @@ def answer_question(context, question, qa_pipeline):
     # Extract the generated answer from the output
     answer = generated_text[0]['generated_text'].strip()
     return answer
+
+
+# This function uses google gemini to answer questions.
+def google_qna(context, question, level):
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    prompts = {
+        'professional': "Based on the given context, provide a detailed answer suitable for healthcare professionals.",
+        'intermediate': "Based on the given context, Answer in a comprehensive yet accessible manner.",
+        'layman': "Based on the given context, Answer in simple terms suitable for the general public."
+    }
+    prompt = prompts.get(level, "Invalid QA level selected.") + f" Context: {context} Question: {question}"
+    response = model.generate_content(prompt)
+    return response
 
 
 # Example usage

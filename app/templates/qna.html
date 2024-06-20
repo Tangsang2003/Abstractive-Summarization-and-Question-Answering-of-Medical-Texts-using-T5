@@ -1,22 +1,31 @@
-<!-- summarize.html -->
+<!-- qna.html -->
+
 {% extends 'layout.html' %}
-{% block title %}Summarization{% endblock %}
+{% block title %}Question Answering{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <h2 class="mt-4 mb-4">Summarization</h2>
+        <h2 class="mt-4 mb-4">Question Answering</h2>
         <form method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
+            {% if answer %}
+            <div class="mt-4 answer-container">
+                <h4>Question:</h4>
+                <p> {{question}} </p>
+                <h4>Answer:</h4>
+                {{ answer | safe }}
+            </div>
+        {% endif %}
 
             <div class="mb-3">
                 {{ form.model_choice.label(class="form-label") }}
                 {{ form.model_choice(class="form-select") }}
-
             </div>
+
             <div class="mb-3">
                 {{ form.gemini_option.label(class="form-label") }}
-                {{ form.gemini_option( class="form-select") }}
+                {{ form.gemini_option(class="form-select") }}
             </div>
 
             <div class="mb-3">
@@ -29,8 +38,14 @@
                 {{ form.input_text(class="form-control", rows=5) }}
             </div>
 
-            <button type="submit" class="btn btn-secondary">Summarize</button>
+            <div class="mb-3">
+                {{ form.question_input.label(class="form-label") }}
+                {{ form.question_input(class="form-control", rows=3) }}
+            </div>
+
+            <button type="submit" class="btn btn-secondary">Answer</button>
         </form>
+
 
     </div>
 </div>

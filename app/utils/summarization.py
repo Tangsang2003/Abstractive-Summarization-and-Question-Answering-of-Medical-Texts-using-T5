@@ -94,7 +94,7 @@ def summarize_text(text, summarization_pipeline):
     # Generate summary for the current chunk
     length = count_words(text)
     input_text = normalize_text(text)
-    summary = summarization_pipeline(input_text, max_length=round(0.7 * length), min_length=round(0.35 * length),
+    summary = summarization_pipeline(input_text, max_length=300, min_length=50,
                                      do_sample=False)[0]['summary_text']
     # Split the summary into sentences
     sentences = summary.split('. ')
@@ -129,12 +129,11 @@ def google_summary(text, level):
     model = genai.GenerativeModel('gemini-1.5-flash')
     output_level = level
     if level == 'professional':
-        input_prompt = 'Summarize the whole text suitable for Healthcare Professional ' \
-                       '(It is not necessary to simplify terms)'
+        input_prompt = 'Generate a detailed summary suitable for healthcare professionals: '
     elif level == 'intermediate':
-        input_prompt = 'Summarize the whole text suitable for intermediate (Informed Individual): '
+        input_prompt = 'Provide a balanced summary that is informative yet accessible.: '
     else:
-        input_prompt = 'Summarize the whole text suitable for Layman person: '
+        input_prompt = 'Create a simplified summary suitable for the general public.'
     response = model.generate_content(input_prompt + text)
     return response
 
