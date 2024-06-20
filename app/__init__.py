@@ -7,7 +7,7 @@ def create_app():
     app = Flask(__name__)
 
     # Configuration settings and other setups can go here
-    app.config['SECRET_KEY'] = 'XYZABCDEF'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
     app.config['DEBUG'] = True  # Enable debug mode
     from app.routes import bp as main_bp
     app.register_blueprint(main_bp)
