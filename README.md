@@ -2,9 +2,9 @@
 ## Overview 🧐
 **MedEaseIne**  ⭐ is a project aimed at summarizing medical texts and documents into patient-friendly summaries. It also facilitates question-answering based on medical context using state-of-the-art models. We have utilized the T5 (Text-To-Text Transfer Transformer) model from Hugging Face Transformers library to perform abstractive summarization and question answering on medical texts. The T5 model is fine-tuned on medical domain-specific data (the PubMed Subset Bulk and SumPubMed) to generate concise summaries. Likewise, we have also utilized Google Gemini API to extract information from texts or documents and summarize them into patient-friendly language as well as facilitate question-answering.
 
-## Demo Video 📹
-- The demo video can be found [here.](https://drive.google.com/drive/folders/1zFes1W1IBU5s50MBliVtcKaEum_ApEbZ?usp=drive_link)
-- The slides can be found [here.](https://drive.google.com/drive/folders/1bAvogrEJLA1fIjyC_fcBPlkRimPSnN_B?usp=drive_link)
+## Demo📹
+![Demo Gif](./demo-gif.gif)
+
 
 ## Directory Structure 🗂️
 ```
@@ -50,7 +50,7 @@
 
 
 ## Datasets and Fine-Tuning 🗄️
-- All the datasets that were used to fine-tune our models can be found [here.](https://drive.google.com/drive/u/0/folders/1qLl840KFRAxMOW9BiVonUMCvYrl4yiED)
+- All the datasets that were used to fine-tune our models can be found [here.](https://drive.google.com/drive/folders/1PWWSLLyMEkJFyjKBD0cP4SHoV8tjwcdQ?usp=drive_link)
 - All the scripts that were used to train our models can be found [here.](./scripts/)
 - [This script](./scripts/dataset_creation_pubmed_subset.ipynb) was used to extract abstracts, and the whole content from PubMed articles and then the [CHV dataset](https://drive.google.com/file/d/1Og-Z7tRlRPppavl5JfBRd_pDuyOjEM9U/view?usp=drive_link) was used to replace complex terms with Consumer Vocabulary to simplify the abstracts. The simplified abstracts were used as target text to our T5-small model and the content were used as source.
 - [This script](./scripts/subset_sumpubmed.py) and [this script](./scripts/sumpubmed_dataset_script.py) were used to create a subset of SumPubMed dataset.
@@ -128,9 +128,9 @@ $ mkdir summarization
 $ cd summrization
 $ mkdir summarization_final_trained_model
 ```
-- Download T5 model for Summarization from [here.](https://drive.google.com/drive/folders/1R1o_CvddE3WdGy4YfpyWmT-4ZbiX5SwM?usp=drive_link)
+- Download T5 model for Summarization from [here.](https://drive.google.com/drive/folders/11CaPh6BBeBPX7KFlQz5Fwa5Clt0j6dh9?usp=drive_link)
 - Copy all the files to the `summarization_final_trained_model` directory.
-- Download T5 model for Question Answering from [here.](https://drive.google.com/drive/folders/1Clnbx3-xiX4M5VeOfi9lg5jl3r7SB8vL?usp=drive_link)
+- Download T5 model for Question Answering from [here.](https://drive.google.com/drive/folders/14LH4DWRHiNwYjsB_i39nXUedUm5NK5Ih?usp=drive_link)
 - Copy all the files to the `checkpoint-1500` directory.
 - Obtain `GOOGLE_API_KEY` from [here.](https://aistudio.google.com/app/u/1/apikey)
 - Setup the ` SECRET_KEY` and `GOOGLE_API_KEY` in your system's `Environment Variables`.
